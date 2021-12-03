@@ -48,62 +48,59 @@ proceed = driver.find_element(By.CSS_SELECTOR, 'div:nth-child(3)>a')
 proceed.click()
 
 # Заполнение полей Checkout
-time.sleep(2)
+# Ввод имени
 first_name = driver.find_element(By.CSS_SELECTOR, '[name="billing_first_name"]')
 first_name.send_keys('Severus')
-
 time.sleep(2)
+
+# Ввод фамилии
 last_name = driver.find_element(By.CSS_SELECTOR, '[name="billing_last_name"]')
 last_name.send_keys('Snape')
-
 time.sleep(2)
-company = driver.find_element(By.CSS_SELECTOR, '[name="billing_company"]')
-company.send_keys('OOO Horgwarts')
 
-time.sleep(2)
+# Ввод почты
 email = driver.find_element(By.CSS_SELECTOR, '[name="billing_email"]')
 email.send_keys('severusape@hogwarts.com')
-
 time.sleep(2)
+
+# Ввод телефона
 phone = driver.find_element(By.CSS_SELECTOR, '[name="billing_phone"]')
 phone.send_keys('+29718576348')
 time.sleep(2)
 
+# Выбор страны
 country = driver.find_element(By.CSS_SELECTOR, 'p>div')
 country.click()
 time.sleep(2)
-
-select_country = driver.find_element(By.CSS_SELECTOR, '.select2-container')
-select_country.click()
-time.sleep(2)
-
-write_country = driver.find_element(By.CSS_SELECTOR, '[class="select2-search"]')
+write_country = driver.find_element(By.ID, 's2id_autogen1_search')
 write_country.send_keys('Afghanistan')
 time.sleep(2)
-
 select_afghanistan = driver.find_element(By.CSS_SELECTOR, '[class="select2-match"]')
 time.sleep(2)
 select_afghanistan.click()
 
-time.sleep(2)
-address = driver.find_element(By.ID, '[name="billing_address_1"]')
+# Ввод адреса
+address = driver.find_element(By.CSS_SELECTOR, '[name="billing_address_1"]')
 address.send_keys('Diagon Alley, 33')
-
 time.sleep(2)
-postcode = driver.find_element(By.CSS_SELECTOR, '[name="billing_postcode"]')
-postcode.send_keys('46580')
 
-time.sleep(2)
+# Ввод города
 city = driver.find_element(By.CSS_SELECTOR, '[name="billing_city"]')
 city.send_keys('Warsaw')
+time.sleep(2)
 
-# Увеличение количества для второй книги
+# Ввод кода страны
+postcode = driver.find_element(By.CSS_SELECTOR, '[name="billing_postcode"]')
+postcode.send_keys('46580')
+time.sleep(2)
+
+# Скролл вниз на 600 пикселей, и выбор радиокнопки Check Payments
 driver.execute_script("window.scrollBy(0, 600);")
-check_payment = driver.find_element(By.CSS_SELECTOR, '.div>ul>li:nth-child(2)>input')
+check_payment = driver.find_element(By.ID, 'payment_method_cheque')
 check_payment.click()
+time.sleep(3)
 
 # Нажатие на кнопку Place order
-time.sleep(2)
 place_order = driver.find_element(By.CSS_SELECTOR, '[id="place_order"]')
 place_order.click()
 
@@ -112,8 +109,8 @@ text = wait.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, 'div>div>p:
                                                    'Thank you. Your order has been received.'))
 
 # Проверка Payment Method с явным ожиданием
-payment_method = wait.until(EC.text_to_be_present_in_element(By.CSS_SELECTOR, 'div>ul>li:nth-child(4)'),
-                            'Check Payments')
+payment_method = wait.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, 'div>ul>li:nth-child(4)'),
+                                                             'Check Payments'))
 
 # Закрытие окна
 driver.quit()
